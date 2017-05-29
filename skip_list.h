@@ -25,18 +25,9 @@ namespace sl {
         
         bool insert(item* new_item);
         
-        void to_stream() const
-        {
-            auto h = highest_head();
-            
-            while (nullptr != h)
-            {
-                single_list single(h);
-                single.to_stream();
-                h = dynamic_cast<head*>(h->get_under());
-                std::cout << '\n';
-            }
-        }
+        void to_stream() const;
+
+        head* get_base_head() const { return base_head_; }
 
     private:
         

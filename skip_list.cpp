@@ -58,8 +58,8 @@ bool skip_list::find(item* new_item, item** output)
         
     }
     
-    while (nullptr != cur_pivot->get_under())
-        cur_pivot = cur_pivot->get_under();
+    /*while (nullptr != cur_pivot->get_under())
+        cur_pivot = cur_pivot->get_under();*/
     
     *output = cur_pivot;
     
@@ -83,4 +83,16 @@ bool skip_list::insert(item* new_item)
 //    }
     
     return false;
+}
+
+void skip_list::to_stream() const
+{
+  auto h = highest_head();
+
+  while (nullptr != h)
+  {
+    single_list single(h);
+    single.to_stream();
+    h = dynamic_cast<head*>(h->get_under());
+  }
 }

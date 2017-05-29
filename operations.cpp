@@ -41,7 +41,7 @@ bool sl::find_forward(item* pivot, item* to_find, item** output)
   auto walker = pivot;
   while (walker != nullptr)
   {
-    if (*to_find < *walker)
+    if (!(*walker < *to_find))
     {
       *output = walker;
       return true;
