@@ -58,8 +58,8 @@ bool skip_list::find(item* new_item, item** output)
         
     }
     
-    /*while (nullptr != cur_pivot->get_under())
-        cur_pivot = cur_pivot->get_under();*/
+    while (nullptr != cur_pivot->get_under())
+        cur_pivot = cur_pivot->get_under();
     
     *output = cur_pivot;
     
