@@ -17,9 +17,18 @@ namespace sl {
     {
     public:
         single_list(head* h) : h_(h) { assert(nullptr != h_); }
+        single_list(item* i)
+        {
+            item* left = i;
+            while (nullptr != left->get_prev())
+                left = left->get_prev();
+
+            h_ = dynamic_cast<head*>(left);
+        }
         
         bool insert(item* new_item)
         {
+            assert(nullptr != h_);
             assert(nullptr != new_item);
             
             new_item->set_next(nullptr);
@@ -49,9 +58,10 @@ namespace sl {
             return false;
         }
         
-        head* get_head() const { return h_; }
+        head* get_head() const { assert(nullptr != h_); return h_; }
         item* get_tail() const
         {
+            assert(nullptr != h_);
             item* tail = h_;
             while (nullptr != tail->get_next())
                 tail = tail->get_next();
@@ -60,6 +70,7 @@ namespace sl {
         
         void to_stream() const
         {
+            assert(nullptr != h_);
             auto walker = h_->get_next();
             while (nullptr != walker)
             {

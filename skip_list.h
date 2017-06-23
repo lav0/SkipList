@@ -30,32 +30,17 @@ namespace sl {
         head* get_base_head() const { return base_head_; }
 
     private:
-        
-        bool insert_into_layer_over(head* current, item* to_insert)
-        {
-            auto head_over = dynamic_cast<head*>(current->get_over());
-            
-            if (nullptr == head_over)
-            {
-                head_over = new head;
-                vert_join(current, head_over);
-            }
-            
-            single_list single(head_over);
-            
-            single.insert(to_insert);
-            
-            return false;
-        }
-        
-        head* highest_head() const
-        {
-            item* h = base_head_;
-            while (nullptr != h->get_over())
-                h = h->get_over();
-            return dynamic_cast<head*>(h);
-        }
-        
+
+        bool insert_after_one_layer(item* after, item* new_item);
+        bool insert_into_layer_over(head* current, item* to_insert);
+
+      /**
+       * \brief returns the head of the most high and sparse list
+       * \return 
+       */
+        head* highest_head() const;
+        item* first_left_with_above_item(item* from_this) const;
+
     private:
         
         head* base_head_ = nullptr;

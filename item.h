@@ -29,7 +29,7 @@ namespace sl
         
         it* get_next() const { return next_; }
         it* get_prev() const { return prev_; }
-        it* get_over() const { return over_; }
+        it* get_above() const { return over_; }
         it* get_under() const { return under_; }        
         
         const T& get_value() const { return value_;}
