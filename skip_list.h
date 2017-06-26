@@ -15,15 +15,17 @@ namespace sl {
     {
     public:
         
+        skip_list();
         skip_list(head* h);
+        ~skip_list();
         
         /*
          *   true if exact match is found
          *   output is always set
          */
-        bool find(item* new_item, item** output);
+        bool find(const item::T& new_value, item** output);
         
-        bool insert(item* new_item);
+        bool insert(const item::T& new_value);
         
         void to_stream() const;
 
@@ -31,6 +33,8 @@ namespace sl {
 
     private:
 
+        bool find(item* new_item, item** output);
+        bool insert(item* new_item);
         bool insert_after_one_layer(item* after, item* new_item);
         bool insert_into_layer_over(head* current, item* to_insert);
 

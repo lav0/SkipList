@@ -16,7 +16,7 @@ using the_type = int;
 
 bool test_find()
 {
-  head h1, h2, h3;
+  /*head h1, h2, h3;
 
   item it31(3), it32(3), it33(3);
   item it5(5);
@@ -37,35 +37,38 @@ bool test_find()
   hori_join(&it5, &it71);
   hori_join(&it32, &it72);
 
-  skip_list list (&h1);
+  skip_list list (&h1);*/
+    skip_list list;
 
-  item it5_find(5), it6(6), it7_find(7), it3_find(3);
+    list.insert(3);
+    list.insert(5);
+    list.insert(7);
 
-  item * p1 = nullptr, *p2 = nullptr, *p3 = nullptr, *p4 = nullptr;
+    item * p1 = nullptr, *p2 = nullptr, *p3 = nullptr, *p4 = nullptr;
 
-  bool b1 = list.find(&it5_find, &p1);
-  bool b2 = list.find(&it6, &p2);
-  bool b3 = list.find(&it7_find, &p3);
-  bool b4 = list.find(&it3_find, &p4);
+    bool b1 = list.find(5, &p1);
+    bool b2 = list.find(6, &p2);
+    bool b3 = list.find(7, &p3);
+    bool b4 = list.find(3, &p4);
 
-  list.to_stream();
+    list.to_stream();
 
-  return
-    b1 == true &&
-    b2 == false &&
-    b3 == true &&
-    b4 == true &&
-    p1 == p2 &&
-    p3 == single_list(list.get_base_head()).get_tail() &&
-    p1->get_under() == nullptr &&
-    p2->get_under() == nullptr &&
-    p3->get_under() == nullptr &&
-    p4->get_under() == nullptr;
+    return
+        b1 == true &&
+        b2 == false &&
+        b3 == true &&
+        b4 == true &&
+        p1 == p2 &&
+        p3 == single_list(list.get_base_head()).get_tail() &&
+        p1->get_under() == nullptr &&
+        p2->get_under() == nullptr &&
+        p3->get_under() == nullptr &&
+        p4->get_under() == nullptr;
 }
 
 bool test_gen()
 {
-    head h1, h2, h3;
+    /*head h1, h2, h3;
 
     item it31(3), it32(3), it33(3);
     item it5(5);
@@ -86,11 +89,14 @@ bool test_gen()
     hori_join(&it5, &it71);
     hori_join(&it32, &it72);
 
-    skip_list list(&h1);
+    skip_list list(&h1);*/
+    skip_list list;
 
-    item it(4);
+    list.insert(3);
+    list.insert(5);
+    list.insert(7);
 
-    list.insert(&it);
+    list.insert(4);
     list.to_stream();
 
     auto bhead = list.get_base_head();
@@ -114,10 +120,9 @@ int main(int argc, const char * argv[]) {
     bool test = true;
 
     test &= test_find();
-    int i = 0;
-    while (++i < 10)
-     test &= test_gen();
-
+    std::cout << '\n';
+    test &= test_gen();
+    
     if (!test)
         output_failed_result();
     else

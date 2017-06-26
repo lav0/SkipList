@@ -12,8 +12,50 @@
 
 using namespace sl;
 
+bool yes_or_no()
+{
+    std::default_random_engine rand_engine;
+    rand_engine.seed(
+        static_cast<unsigned long>(
+            std::chrono::high_resolution_clock::now().time_since_epoch().count()
+            )
+    );
+
+    std::uniform_int_distribution<item::T> distributor(0, 1);
+
+    auto val = distributor(rand_engine);
+    bool res = val % 2 == 1;
+    return res;
+}
+
+
+skip_list::skip_list()
+    : base_head_(new head)
+{
+}
 
 skip_list::skip_list(head* h) : base_head_(h) { }
+
+skip_list::~skip_list()
+{
+    item* walkie_vert = base_head_;
+
+    while (nullptr != walkie_vert)
+    {
+        item* walkie_hori = walkie_vert->get_next();
+
+        while (nullptr != walkie_hori)
+        {
+            item* to_kill = walkie_hori;
+            walkie_hori = walkie_hori->get_next();
+            delete to_kill;
+        }
+
+        item* prev_to_kill = walkie_vert;
+        walkie_vert = walkie_vert->get_above();
+        delete prev_to_kill;
+    }
+}
 
 bool skip_list::find(item* new_item, item** output)
 {
@@ -68,22 +110,11 @@ bool skip_list::find(item* new_item, item** output)
     return equal(cur_pivot, new_item);
 }
 
-bool yes_or_no()
+bool skip_list::find(const item::T& new_value, item** output)
 {
-    std::default_random_engine rand_engine;
-    rand_engine.seed(
-        static_cast<unsigned long>(
-            std::chrono::high_resolution_clock::now().time_since_epoch().count()
-        )
-    );
-
-    std::uniform_int_distribution<item::T> distributor(0, 1);
-
-    auto val = distributor(rand_engine);
-    bool res = val % 2 == 1;
-    
-        std::cout << "--> " << val << "\n";
-   
+    auto* new_item = new item(new_value);
+    auto res = find(new_item, output);
+    delete new_item;
     return res;
 }
 
@@ -126,6 +157,19 @@ bool skip_list::insert(item* new_item)
             vert_join(to_insert, item_tmp);
             to_insert = item_tmp;
         }
+    }
+
+    return true;
+}
+
+bool skip_list::insert(const item::T& new_value)
+{
+    auto* new_item = new item(new_value);
+
+    if (!insert(new_item))
+    {
+        delete new_item;
+        return false;
     }
 
     return true;
