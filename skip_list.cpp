@@ -7,26 +7,8 @@
 //
 
 #include "skip_list.h"
-#include <random>
-#include <chrono>
 
 using namespace sl;
-
-bool yes_or_no()
-{
-    std::default_random_engine rand_engine;
-    rand_engine.seed(
-        static_cast<unsigned long>(
-            std::chrono::high_resolution_clock::now().time_since_epoch().count()
-            )
-    );
-
-    std::uniform_int_distribution<item::T> distributor(0, 1);
-
-    auto val = distributor(rand_engine);
-    bool res = val % 2 == 1;
-    return res;
-}
 
 
 skip_list::skip_list()
@@ -134,7 +116,7 @@ bool skip_list::insert(item* new_item)
         if (new_head_created)
             break;
 
-        if (need_insertion = yes_or_no())
+        if (need_insertion = tough_rand.yes_or_no())
         {
             auto ledder = first_left_with_above_item(pivot);
             if (nullptr == ledder)
@@ -177,18 +159,21 @@ bool skip_list::insert(const item::T& new_value)
 
 bool skip_list::insert_after_one_layer(item* after_me, item* new_item)
 {
-  assert(nullptr != after_me);
-  assert(nullptr != new_item);
+    assert(nullptr != after_me);
+    assert(nullptr != new_item);
 
-  auto next = after_me->get_next();
+    auto next = after_me->get_next();
 
-  hori_join(after_me, new_item);
-  if (nullptr != next)
-  {
-    hori_join(new_item, next);
-  }
+    hori_join(after_me, new_item);
+    if (nullptr != next)
+    {
+        hori_join(new_item, next);
+    }
 
-  return true;
+    assert(after_me->get_value() <= new_item->get_value());
+    assert(next == nullptr || new_item->get_value() <= next->get_value());
+
+    return true;
 }
 
 bool skip_list::insert_into_layer_over(head* current, item* to_insert)

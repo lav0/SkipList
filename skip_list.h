@@ -8,6 +8,7 @@
 #pragma once
 
 #include "single_list.h"
+#include "Randomler.h"
 
 namespace sl {
     
@@ -48,5 +49,7 @@ namespace sl {
     private:
         
         head* base_head_ = nullptr;
+
+        randomler<item::T> tough_rand;
     };
 }

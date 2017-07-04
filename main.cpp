@@ -68,36 +68,14 @@ bool test_find()
 
 bool test_gen()
 {
-    /*head h1, h2, h3;
-
-    item it31(3), it32(3), it33(3);
-    item it5(5);
-    item it71(7), it72(7);
-
-    vert_join(&h1, &h2);
-    vert_join(&h2, &h3);
-    vert_join(&it31, &it32);
-    vert_join(&it32, &it33);
-    vert_join(&it71, &it72);
-
-    hori_join(&h1, &it31);
-    hori_join(&h2, &it32);
-    hori_join(&h3, &it33);
-
-    hori_join(&it31, &it5);
-
-    hori_join(&it5, &it71);
-    hori_join(&it32, &it72);
-
-    skip_list list(&h1);*/
     skip_list list;
 
     list.insert(3);
     list.insert(5);
     list.insert(7);
+    list.to_stream();
 
     list.insert(4);
-    list.to_stream();
 
     auto bhead = list.get_base_head();
 
